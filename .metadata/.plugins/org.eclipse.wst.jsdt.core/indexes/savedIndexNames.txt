@@ -1,0 +1,6 @@
+INDEX VERSION 1.4+/Users/Marcus/eclipse-workspace/Event Recommendation/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+2775996071.index
+2234967002.index
+3026521838.index
+1733891549.index
+428625144.index
