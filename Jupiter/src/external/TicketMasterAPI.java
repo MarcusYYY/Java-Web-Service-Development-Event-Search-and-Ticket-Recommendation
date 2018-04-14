@@ -20,7 +20,7 @@ public class TicketMasterAPI {
 	private static final String DEFAULT_KEYWORD = ""; // no restriction
 	private static final String API_KEY = "kxD7egBxzIkcVtEvVbiJhFA3UGhBqIoU";
 	
-	public JSONArray search(double lat, double lon, String keyword) {
+	public List<Item> search(double lat, double lon, String keyword) {
         if (keyword == null) {
         	keyword = DEFAULT_KEYWORD;
         }
@@ -45,28 +45,28 @@ public class TicketMasterAPI {
         	in.close();
         	JSONObject obj = new JSONObject(response.toString());
         	if (obj.isNull("_embedded")) {
-        		return new JSONArray();
+        		return new ArrayList<>();
         	}
         	JSONObject embedded = obj.getJSONObject("_embedded");
         	if (embedded.isNull("events")) {
-        		return new JSONArray();
+        		return new ArrayList<>();
         	}else {
-        		JSONArray array = embedded.getJSONArray("events");
-        		return array;
+        		JSONArray events = embedded.getJSONArray("events");
+        		return getItemList(events);
         	}
         	
         } catch (Exception e) {
         	e.printStackTrace();
         }
-        return new JSONArray();	
+        return new ArrayList<>();	
         
 	}
 	 
 	private void queryAPI(double lat, double lon) {
-		JSONArray events = search(lat, lon, null);//for debug
+		List<Item> events = search(lat, lon, null);//for debug
 		try {
-		    for (int i = 0; i < events.length(); i++) {
-		        JSONObject event = events.getJSONObject(i);
+		    for (Item item : events) {
+		        JSONObject event = item.toJSONObject();
 		        System.out.println(event);
 		    }
 		} catch (Exception e) {
